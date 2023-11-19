@@ -9,11 +9,6 @@ import com.example.sotest.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'sotest' library on application startup.
-    static {
-        System.loadLibrary("sotest");
-    }
-
     private ActivityMainBinding binding;
 
     @Override
@@ -25,12 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = binding.sampleText;
-        tv.setText(stringFromJNI());
+        tv.setText(String.valueOf(Client.geterrors()));
     }
-
-    /**
-     * A native method that is implemented by the 'sotest' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 }
