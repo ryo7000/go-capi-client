@@ -9,4 +9,5 @@ public interface Client extends Library {
     int geterrors();
     long genrand();
     String get(String latitude, String longitude);
+    void gofree(String res);
 }

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("App", "Call get in Java");
         String res = Client.INSTANCE.get("35.68141046761117", "139.76716771217266");
         Log.i("App", "Call end in Java");
-        tv2.setText(res);
+        tv2.setText(new String(res));
+        Client.INSTANCE.gofree(res);
     }
 }
