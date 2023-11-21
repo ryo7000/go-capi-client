@@ -21,5 +21,8 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = binding.sampleText;
         tv.setText(String.valueOf(Client.INSTANCE.genrand()));
+
+        TextView tv2 = binding.api;
+        tv.setText(Client.INSTANCE.get("35.68141046761117", "139.76716771217266"));
     }
 }
