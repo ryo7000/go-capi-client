@@ -9,10 +9,13 @@ import "C"
 import (
 	"crypto/rand"
 	"io"
+	"log"
 	"math/big"
 	"net/http"
 	"net/url"
 	"unsafe"
+
+	_ "github.com/ryo7000/go-capi-client/mobileinit"
 )
 
 var messages = map[C.int][]byte{
@@ -22,6 +25,7 @@ var messages = map[C.int][]byte{
 
 //export get
 func get(latitude *C.char, longitude *C.char) *C.char {
+	log.Println("[start] get")
 	endpoint := "https://api.open-meteo.com/v1/forecast"
 
 	u, err := url.Parse(endpoint)
@@ -59,6 +63,7 @@ func get(latitude *C.char, longitude *C.char) *C.char {
 		panic("http error")
 	}
 
+	log.Println("[end] get")
 	// C.CStringは内部でmallocしている
 	return C.CString(string(body))
 }
