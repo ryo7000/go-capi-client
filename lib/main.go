@@ -9,7 +9,7 @@ import "C"
 import (
 	"crypto/rand"
 	"io"
-	"log"
+	"log/slog"
 	"math/big"
 	"net/http"
 	"net/url"
@@ -25,7 +25,8 @@ var messages = map[C.int][]byte{
 
 //export get
 func get(latitude *C.char, longitude *C.char) *C.char {
-	log.Println("[start] get")
+	slog.Info("[start] get")
+	slog.Warn("warn log")
 	endpoint := "https://api.open-meteo.com/v1/forecast"
 
 	u, err := url.Parse(endpoint)
@@ -63,7 +64,7 @@ func get(latitude *C.char, longitude *C.char) *C.char {
 		panic("http error")
 	}
 
-	log.Println("[end] get")
+	slog.Info("[end] get")
 	// C.CStringは内部でmallocしている
 	return C.CString(string(body))
 }

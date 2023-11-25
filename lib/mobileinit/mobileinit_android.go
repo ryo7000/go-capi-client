@@ -10,7 +10,7 @@ package mobileinit
 import "C"
 
 import (
-	"log"
+	"log/slog"
 	"unsafe"
 )
 
@@ -26,7 +26,14 @@ func (infoWriter) Write(p []byte) (n int, err error) {
 }
 
 func init() {
-	log.SetOutput(infoWriter{})
-	// android logcat includes all of log.LstdFlags
-	log.SetFlags(log.Flags() &^ log.LstdFlags)
+	logger := slog.New(slog.NewTextHandler(infoWriter{}, &slog.HandlerOptions{
+		ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
+			// android logcat includes time
+			if a.Key == slog.TimeKey && len(groups) == 0 {
+				return slog.Attr{}
+			}
+			return a
+		},
+	}))
+	slog.SetDefault(logger)
 }
