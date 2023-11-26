@@ -64,13 +64,15 @@ func get(latitude *C.char, longitude *C.char) *C.char {
 		panic("http error")
 	}
 
-	slog.Info("[end] get")
 	// C.CStringは内部でmallocしている
-	return C.CString(string(body))
+	s := C.CString(string(body))
+	slog.Info("[end] get", "pointer", s)
+	return s
 }
 
 //export gofree
 func gofree(cs *C.char) {
+	slog.Info("free", "pointer", cs)
 	C.free(unsafe.Pointer(cs))
 }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.sotest.databinding.ActivityMainBinding;
+import com.sun.jna.ptr.ByteByReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(String.valueOf(Client.INSTANCE.genrand()));
 
         TextView tv2 = binding.api;
-        tv.setText(Client.INSTANCE.get("35.68141046761117", "139.76716771217266"));
+        ByteByReference ref = Client.INSTANCE.get("35.68141046761117", "139.76716771217266");
+        tv.setText(ref.getPointer().getString(0));
+        Client.INSTANCE.gofree(ref);
     }
 }
